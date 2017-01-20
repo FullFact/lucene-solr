@@ -11,12 +11,13 @@
 
 ## how to see 'techproducts with fullfact example data'
 
+```
 git clone https://github.com/FullFact/lucene-solr
 git checkout master-fullfact-hackday
 
 cd solr
 ant dist
-and server
+ant server
 
 bin/solr start -e techproducts
 
@@ -25,3 +26,4 @@ http://localhost:8983/solr/techproducts/select?wt=json&fl=id&hl.fl=content_t&hl=
 http://localhost:8983/solr/#/techproducts/analysis?analysis.fieldvalue="NHS is rising"&analysis.fieldtype=text_general&verbose_output=1
 
 bin/solr stop
+```
