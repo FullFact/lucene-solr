@@ -1,13 +1,13 @@
 ## summary of changes
 
-* We [imported|solr/example/exampledocs/fullfact/facthack] the sample data and using a [utility script|solr/example/exampledocs/fullfact/wrap_xml.py] converted them into example input [files|solr/example/exampledocs] (and removed the existing example inputs).
+* We [imported](solr/example/exampledocs/fullfact/facthack) the sample data and using a [utility script](solr/example/exampledocs/fullfact/wrap_xml.py) converted them into example input [files](solr/example/exampledocs) (and removed the existing example inputs).
 
 
-* We added a synonyms [file|solr/server/solr/configsets/sample_techproducts_configs/conf/index_synonyms.txt] to be replaced in future by ...
+* We added a synonyms [file](solr/server/solr/configsets/sample_techproducts_configs/conf/index_synonyms.txt) to be replaced in future by ...
 
-* The `content_t` field is of `text_general` field type. We configured `solr.SynonymFilterFactory` using `index_synonyms.txt` for `text_general` field type in [managed-schema|solr/server/solr/configsets/sample_techproducts_configs/conf/managed-schema#L451]
+* The `content_t` field is of `text_general` field type. We configured `solr.SynonymFilterFactory` using `index_synonyms.txt` for `text_general` field type in [managed-schema](solr/server/solr/configsets/sample_techproducts_configs/conf/managed-schema#L451)
 
-* We increased the default `hl.maxAnalyzedChars` for the `/select` handler in [solrconfig.xml|solr/server/solr/configsets/sample_techproducts_configs/conf/solrconfig.xml#L780].
+* We increased the default `hl.maxAnalyzedChars` for the `/select` handler in [solrconfig.xml](solr/server/solr/configsets/sample_techproducts_configs/conf/solrconfig.xml#L780).
 
 ## how to see 'techproducts with fullfact example data'
 
