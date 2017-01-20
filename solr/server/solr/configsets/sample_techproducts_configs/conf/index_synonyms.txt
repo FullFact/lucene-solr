@@ -12,12 +12,21 @@
 
 #-----------------------------------------------------------------------
 #some test synonym mappings unlikely to appear in real input text
-unemployment => unemployment,_NNP_
 is => is,_VBZ_
 rising => rising,_VBG_
-Trump => Trump,_NNP_,_PERSON_
-Donald => Donald,_NNP_,_PERSON_
-president => president,_NN_
+housing => housing,_NN_
+benefit => benefit,_NN_
+demand => demand,_NN_
+high => high,_NN_
+street => street,_NN_
+NHS => NHS,_NN_
+pound => pound,_NN_
+youth => youth,_NN_
+employment => employment,_NN_
+and => and,_CC_
+standard => standard,_NN_
 of => of,_IN_
-America => America,_NNP_,_LOCATION_
-not => not,_RB_
+living => living,_NN_
+consumer => consumer,_NN_
+debt => debt,_NN_
+country => country,_NN_
