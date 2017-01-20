@@ -26,7 +26,7 @@ A consistent token policy for each annotation is required. We just prefixed and 
 
 * It seesm you can not query easily for two tokens at the same position - for "rising" as a "verb". It is not possibly to match two tokens at the same position. This may limit the use.
 
-## how to see 'techproducts with fullfact example data'
+## start Solr's techproducts example with FullFact's example data
 
 ```
 git clone https://github.com/FullFact/lucene-solr
@@ -38,11 +38,44 @@ ant server
 
 bin/solr start -e techproducts
 
-http://localhost:8983/solr/techproducts/select?wt=json&fl=id&hl.fl=content_t&hl=on&indent=on&q=content_t:"_nn_ is rising"
-
-http://localhost:8983/solr/#/techproducts/analysis?analysis.fieldvalue="NHS is rising"&analysis.fieldtype=text_general&verbose_output=1
+# run searches or view analysis results (see below)
 
 bin/solr stop
+```
+
+## running a search
+
+To search for `<noun> is rising` use the query `content_t:"_nn_ is rising"` (all lower case) with `_nn_` being the `<noun>` placeholder.
+
+### via the Solr Admin UI
+ * http://localhost:8983/solr/#/techproducts/query is the link
+ * inputs
+   * q `content_t:"_nn_ is rising"` (query to run)
+   * fl `id` (fields to return)
+   * indent `check` (indentation, for display purposes)
+   * hl `check` (highlighting)
+   * hl.fl `content_t`
+
+### via your browser
+ * copy/paste the following address
+```
+http://localhost:8983/solr/techproducts/select?wt=json&fl=id&indent=on&q=content_t:"_nn_ is rising"
+```
+
+## viewing analysis results
+
+### via the Solr Admin UI
+
+ * http://localhost:8983/solr/#/techproducts/analysis is the link
+ * inputs
+   * Field Value (Index) `NHS is rising`
+   * Analyse Fieldname / FieldType `text_general`
+   * Verbose Output `check`
+
+### via your browser
+ * copy/paste the following address
+```
+http://localhost:8983/solr/#/techproducts/analysis?analysis.fieldvalue="NHS is rising"&analysis.fieldtype=text_general&verbose_output=1
 ```
 
 ## Model each claim as a single Solr Document
