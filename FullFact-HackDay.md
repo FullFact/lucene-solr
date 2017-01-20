@@ -1,3 +1,18 @@
+## Problem
+
+A "Stats" query to find "*something* is rising".
+Where "something" is a noun phrase or similar.
+
+The proposed solution was to include part of speech mark up at the same position during tokenisation, similar to synonyms.
+Then you can query for something like
+```
+_nn_ is rising
+```
+
+Entity and other mark up could be included in the same way.
+A consistent token policy for each annotation is required. We just prefixed and post fixed with "_".
+
+
 ## summary of changes
 
 * We [imported](solr/example/exampledocs/fullfact/facthack) the sample data and using a [utility script](solr/example/exampledocs/fullfact/wrap_xml.py) converted them into example input [files](solr/example/exampledocs) (and removed the existing example inputs).
