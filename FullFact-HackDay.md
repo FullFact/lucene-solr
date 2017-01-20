@@ -3,11 +3,13 @@
 * We [imported](solr/example/exampledocs/fullfact/facthack) the sample data and using a [utility script](solr/example/exampledocs/fullfact/wrap_xml.py) converted them into example input [files](solr/example/exampledocs) (and removed the existing example inputs).
 
 
-* We added a synonyms [file](solr/server/solr/configsets/sample_techproducts_configs/conf/index_synonyms.txt) to be replaced in future by ...
+* We added a synonyms [file](solr/server/solr/configsets/sample_techproducts_configs/conf/index_synonyms.txt) which mocks what a real part of speech analyser would produce, for a small number of sample words. A real POS tokenizer is still required.
 
 * The `content_t` field is of `text_general` field type. We configured `solr.SynonymFilterFactory` using `index_synonyms.txt` for `text_general` field type in [managed-schema](solr/server/solr/configsets/sample_techproducts_configs/conf/managed-schema#L451)
 
 * We increased the default `hl.maxAnalyzedChars` for the `/select` handler in [solrconfig.xml](solr/server/solr/configsets/sample_techproducts_configs/conf/solrconfig.xml#L780).
+
+* It seesm you can not query easily for two tokens at the same position - for "rising" as a "verb". It is not possibly to match two tokens at the same position. This may limit the use.
 
 ## how to see 'techproducts with fullfact example data'
 
