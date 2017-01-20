@@ -13,7 +13,7 @@ Entity and other mark up could be included in the same way.
 A consistent token policy for each annotation is required. We just prefixed and post fixed with "_".
 
 
-## summary of changes
+## Summary of changes
 
 * We [imported](solr/example/exampledocs/fullfact/facthack) the sample data and using a [utility script](solr/example/exampledocs/fullfact/wrap_xml.py) converted them into example input [files](solr/example/exampledocs) (and removed the existing example inputs).
 
@@ -26,7 +26,7 @@ A consistent token policy for each annotation is required. We just prefixed and 
 
 * It seesm you can not query easily for two tokens at the same position - for "rising" as a "verb". It is not possibly to match two tokens at the same position. This may limit the use.
 
-## start Solr's techproducts example with FullFact's example data
+## Start Solr's techproducts example with FullFact's example data
 
 ```
 git clone https://github.com/FullFact/lucene-solr
@@ -43,7 +43,7 @@ bin/solr start -e techproducts
 bin/solr stop
 ```
 
-## running a search
+## Running a search
 
 To search for `<noun> is rising` use the query `content_t:"_nn_ is rising"` (all lower case) with `_nn_` being the `<noun>` placeholder.
 
@@ -62,7 +62,7 @@ To search for `<noun> is rising` use the query `content_t:"_nn_ is rising"` (all
 http://localhost:8983/solr/techproducts/select?wt=json&fl=id&indent=on&q=content_t:"_nn_ is rising"
 ```
 
-## viewing analysis results
+## Viewing analysis results
 
 ### via the Solr Admin UI
 
