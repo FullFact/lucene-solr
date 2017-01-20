@@ -44,3 +44,77 @@ http://localhost:8983/solr/#/techproducts/analysis?analysis.fieldvalue="NHS is r
 
 bin/solr stop
 ```
+
+## Model each claim as a single Solr Document
+An additional consideration is related coreNLP.
+Stanford coreNLP is the NLP library currently used for text pre-processing in FullFact.
+It could be interesting to model one Solr Document per potential claim.
+For example a claim could be modeled with the following fields :
+* Root Verb
+* Subject
+* Object
+* Author
+            
+Content of the fields could be plain text or entities ( if we put NER in the game).
+Plain text and entities can live in separate fields to be consistent.
+This is not a simple solution as the structure(s) of a claim must be defined from a grammar perspective 
+(to be able to parse the dependency graph and map it to the claim document).
+It may require a lot of simplification and the definition of supported grammar structures.
+So it is not just navigating the edges of the dependency graph returned by coreNLP and push them to Solr.
+
+This code snippets will show how to use coreNLP through Java API to explore the annotations that can be used in Solr.
+            
+N.B. this is a very basic code snippet and to work nicely we need to put much more effort in identifying the root verbs
+and related subjects and objects.
+```
+HttpSolrClient.Builder builder = new HttpSolrClient.Builder("http://localhost:8983/solr/facts");
+        HttpSolrClient solrClient = builder.build();
+
+        String text = prepareText();
+
+        Properties annotationProperties = new Properties();
+        annotationProperties.setProperty("annotators", "tokenize,ssplit,pos,depparse");
+        StanfordCoreNLPClient stanfordProcessingPipeline = new StanfordCoreNLPClient(annotationProperties, "http://corenlp.run", 80, 2);
+        Annotation document = new Annotation(text);
+
+        stanfordProcessingPipeline.annotate(document);
+
+        List<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
+        for (CoreMap sentence : sentences) {
+            String sentenceText = sentence.get(CoreAnnotations.TextAnnotation.class);
+            Integer id = sentence.get(CoreAnnotations.TokenBeginAnnotation.class);
+
+            SemanticGraph sentenceDependencies = sentence.get(SemanticGraphCoreAnnotations.BasicDependenciesAnnotation.class);
+
+            Collection<IndexedWord> roots = sentenceDependencies.getRoots();
+            
+            for (IndexedWord claimRoot : roots) {
+                SolrInputDocument exampleDoc = new SolrInputDocument();
+                exampleDoc.addField("id", claimRoot.beginPosition() + "-" + id);
+                exampleDoc.addField("text", sentenceText);
+                exampleDoc.addField("dependencies", sentenceDependencies);
+
+                List<SemanticGraphEdge> outcomingEdges = sentenceDependencies.getOutEdgesSorted(claimRoot);
+                StringBuilder verbBuilder = new StringBuilder();
+                verbBuilder.append(claimRoot.value());
+                for (SemanticGraphEdge edge : outcomingEdges) {
+                    if (edge.getRelation().getShortName().equals("aux")) {
+                        verbBuilder.insert(0, " " + edge.getTarget().value() + " ");
+                    }
+                    if (edge.getRelation().getShortName().equals("nsubj")) {
+                        exampleDoc.addField("nsubj", edge.getTarget().value());
+                    }
+                }
+                exampleDoc.addField("root", verbBuilder.toString());
+
+                try {
+                    solrClient.add(exampleDoc);
+                    solrClient.commit();
+                } catch (SolrServerException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+```
