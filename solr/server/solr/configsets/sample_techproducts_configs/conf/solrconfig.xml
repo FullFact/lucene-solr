@@ -777,6 +777,7 @@
          will be overridden by parameters in the request
       -->
      <lst name="defaults">
+       <str name="hl.maxAnalyzedChars">1234567</str>
        <str name="echoParams">explicit</str>
        <int name="rows">10</int>
        <!-- Controls the distribution of a query to shards other than itself.
