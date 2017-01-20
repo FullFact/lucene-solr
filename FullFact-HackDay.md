@@ -48,7 +48,7 @@ bin/solr stop
 To search for `<noun> is rising` use the query `content_t:"_nn_ is rising"` (all lower case) with `_nn_` being the `<noun>` placeholder.
 
 ### via the Solr Admin UI
- * http://localhost:8983/solr/#/techproducts/query is the link
+ * [http://localhost:8983/solr/#/techproducts/query](https://github.com/FullFact/lucene-solr/tree/master-fullfact-hackday) is the link
  * inputs
    * q `content_t:"_nn_ is rising"` (query to run)
    * fl `id` (fields to return)
@@ -66,7 +66,7 @@ http://localhost:8983/solr/techproducts/select?wt=json&fl=id&indent=on&q=content
 
 ### via the Solr Admin UI
 
- * http://localhost:8983/solr/#/techproducts/analysis is the link
+ * [http://localhost:8983/solr/#/techproducts/analysis](http://localhost:8983/solr/#/techproducts/analysis) is the link
  * inputs
    * Field Value (Index) `NHS is rising`
    * Analyse Fieldname / FieldType `text_general`
